@@ -1,44 +1,29 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/react-in-jsx-scope */
 import {NavigationContainer} from '@react-navigation/native';
-import HomeScreen from '../screens/HomeScreen/HomeScreen';
-import ProfileScreen from '../screens/ProfileScreen';
-import {Image} from 'react-native';
-import logo from '../assets/images/logo.png';
 
 import {createStackNavigator} from '@react-navigation/stack';
+import BottomTabNavigator from './BottomTabNavigator';
 
-const Stack = createStackNavigator(); // { Navigator, Screen }
+import CommentsScreen from '../screens/CommentsScreen/CommentsScreen';
+import {RootNavigatorParamList} from './types';
+
+const Stack = createStackNavigator<RootNavigatorParamList>(); // { Navigator, Screen }
 
 const Navigation = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Feed"
+        initialRouteName="Home"
         screenOptions={{headerShown: true}}>
         <Stack.Screen
-          name="Feed"
-          component={HomeScreen}
-          options={{headerTitle: HeaderTitle, headerTitleAlign: 'center'}}
+          name="Home"
+          component={BottomTabNavigator}
+          options={{headerShown: false}}
         />
-
-        <Stack.Screen
-          name="UserProfile"
-          component={ProfileScreen}
-          options={{title: 'Profile'}}
-        />
+        <Stack.Screen name="Comments" component={CommentsScreen} />
       </Stack.Navigator>
     </NavigationContainer>
-  );
-};
-
-const HeaderTitle = () => {
-  return (
-    <Image
-      source={logo}
-      resizeMode="contain"
-      style={{width: 150, height: 40}}
-    />
   );
 };
 

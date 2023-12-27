@@ -8,6 +8,8 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
+import {useNavigation} from '@react-navigation/native';
+
 import styles from './styles';
 import {IPost} from '../../types/models';
 
@@ -28,6 +30,12 @@ const FeedPost = (props: IFeedPost) => {
 
   const toggleLike = () => {
     setIsLiked(v => !v);
+  };
+
+  const navigation = useNavigation();
+
+  const navigateToUser = () => {
+    navigation.navigate('UserProfile', {userId: post.user.id});
   };
 
   const toggleDescriptionExpanded = () => {
@@ -64,7 +72,9 @@ const FeedPost = (props: IFeedPost) => {
           }}
           style={styles.userAvatar}
         />
-        <Text style={styles.userName}>{post.user.username}</Text>
+        <Text onPress={navigateToUser} style={styles.userName}>
+          {post.user.username}
+        </Text>
 
         <Entypo
           name="dots-three-horizontal"

@@ -2,6 +2,7 @@
 /* eslint-disable react/react-in-jsx-scope */
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
+import PostUploadScreen from '../screens/PostUploadScreen';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -40,7 +41,7 @@ const BottomTabNavigator = () => {
       />
       <Tab.Screen
         name="Upload"
-        component={HomeScreen}
+        component={PostUploadScreen}
         options={{
           headerShown: false,
           tabBarIcon: ({color, size}) => (
@@ -54,7 +55,7 @@ const BottomTabNavigator = () => {
       />
       <Tab.Screen
         name="Notifications"
-        component={HomeScreen}
+        component={PostUploadScreen}
         options={{
           tabBarIcon: ({color, size}) => (
             <MaterialCommunityIcons

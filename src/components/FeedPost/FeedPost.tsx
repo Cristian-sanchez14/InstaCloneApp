@@ -10,7 +10,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import {useNavigation} from '@react-navigation/native';
-import {FeedNavigationProp} from '../../navigation/types';
+import {FeedNavigationProp} from '../../types/navigation';
 
 import styles from './styles';
 import {IPost} from '../../types/models';

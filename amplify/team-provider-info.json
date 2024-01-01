@@ -10,6 +10,11 @@
       "StackName": "amplify-nativeinstaclone-dev-103218",
       "StackId": "arn:aws:cloudformation:us-west-2:229999919476:stack/amplify-nativeinstaclone-dev-103218/0faf6b20-a5a7-11ee-8cf9-064ffee72fb1",
       "AmplifyAppId": "d1fcrtxwxbilmd"
+    },
+    "categories": {
+      "auth": {
+        "nativeinstaclone": {}
+      }
     }
   }
 }

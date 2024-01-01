@@ -2,7 +2,7 @@
 import {createStackNavigator} from '@react-navigation/stack';
 import ProfileScreen from '../screens/ProfileScreen';
 import EditProfileScreen from '../screens/EditProfileScreen';
-import {ProfileStackNavigatorParamList} from './types';
+import {ProfileStackNavigatorParamList} from '../types/navigation';
 
 const Stack = createStackNavigator<ProfileStackNavigatorParamList>();
 

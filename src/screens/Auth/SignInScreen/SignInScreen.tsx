@@ -14,28 +14,24 @@ import SocialSignInButtons from '../components/SocialSignInButtons';
 import {useNavigation} from '@react-navigation/native';
 import {useForm} from 'react-hook-form';
 import {SignInNavigationProp} from '../../../types/navigation';
-import {Auth} from 'aws-amplify';
 import {useState} from 'react';
 
-type SignInData = {
-  username: string;
-  password: string;
-};
+import {signIn, type SignInInput} from 'aws-amplify/auth';
 
 const SignInScreen = () => {
   const {height} = useWindowDimensions();
   const navigation = useNavigation<SignInNavigationProp>();
   const [loading, setLoading] = useState(false);
 
-  const {control, handleSubmit, reset} = useForm<SignInData>();
+  const {control, handleSubmit, reset} = useForm<SignInInput>();
 
-  const onSignInPressed = async ({username, password}: SignInData) => {
+  const onSignInPressed = async ({username, password}: SignInInput) => {
     if (loading) {
       return;
     }
     setLoading(true);
     try {
-      const response = await Auth.signIn(username, password);
+      await signIn({username, password});
 
       // TODO save user data in context
     } catch (e) {

@@ -5,32 +5,30 @@ import CustomButton from '../components/CustomButton';
 import {useNavigation} from '@react-navigation/native';
 import {useForm} from 'react-hook-form';
 import {NewPasswordNavigationProp} from '../../../types/navigation';
-import {Auth} from 'aws-amplify';
 
-type NewPasswordType = {
-  username: string;
-  code: string;
-  password: string;
-};
+import {
+  confirmResetPassword,
+  type ConfirmResetPasswordInput,
+} from 'aws-amplify/auth';
 
 const NewPasswordScreen = () => {
-  const {control, handleSubmit} = useForm<NewPasswordType>();
+  const {control, handleSubmit} = useForm<ConfirmResetPasswordInput>();
   const [loading, setLoading] = useState(false);
 
   const navigation = useNavigation<NewPasswordNavigationProp>();
 
   const onSubmitPressed = async ({
     username,
-    code,
-    password,
-  }: NewPasswordType) => {
+    confirmationCode,
+    newPassword,
+  }: ConfirmResetPasswordInput) => {
     if (loading) {
       return;
     }
     setLoading(true);
 
     try {
-      await Auth.forgotPasswordSubmit(username, code, password);
+      await confirmResetPassword({username, confirmationCode, newPassword});
       navigation.navigate('Sign in');
     } catch (e) {
       Alert.alert('Oops', (e as Error).message);
@@ -57,14 +55,14 @@ const NewPasswordScreen = () => {
 
         <FormInput
           placeholder="Code"
-          name="code"
+          name="confirmationCode"
           control={control}
           rules={{required: 'Code is required'}}
         />
 
         <FormInput
           placeholder="Enter your new password"
-          name="password"
+          name="newPassword"
           control={control}
           secureTextEntry
           rules={{

@@ -5,29 +5,35 @@ import CustomButton from '../components/CustomButton';
 import {useNavigation} from '@react-navigation/core';
 import {useForm} from 'react-hook-form';
 import {ForgotPasswordNavigationProp} from '../../../types/navigation';
-import {Auth} from 'aws-amplify';
 
-type ForgotPasswordData = {
+import {resetPassword} from 'aws-amplify/auth';
+
+type ResetPasswordOutput = {
   username: string;
 };
 
 const ForgotPasswordScreen = () => {
-  const {control, handleSubmit} = useForm<ForgotPasswordData>();
+  const {control, handleSubmit} = useForm<ResetPasswordOutput>();
   const navigation = useNavigation<ForgotPasswordNavigationProp>();
   const [loading, setLoading] = useState(false);
 
-  const onSendPressed = async ({username}: ForgotPasswordData) => {
+  const onSendPressed = async ({username}: ResetPasswordOutput) => {
     if (loading) {
       return;
     }
     setLoading(true);
 
     try {
-      const response = await Auth.forgotPassword(username);
-      Alert.alert(
-        'Check your email',
-        `The code has been sent to ${response.CodeDeliveryDetails.Destination}`,
-      );
+      const output = await resetPassword({username});
+      const {nextStep} = output;
+      switch (nextStep.resetPasswordStep) {
+        case 'CONFIRM_RESET_PASSWORD_WITH_CODE':
+          const codeDeliveryDetails = nextStep.codeDeliveryDetails;
+          Alert.alert(
+            'Check your email',
+            `Confirmation code was sent to ${codeDeliveryDetails.deliveryMedium}`,
+          );
+      }
       navigation.navigate('New password');
     } catch (e) {
       Alert.alert('Oops', (e as Error).message);
